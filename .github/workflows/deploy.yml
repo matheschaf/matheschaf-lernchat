@@ -33,8 +33,10 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          # protocol: ftps
-          # security: strict
+          # FTPS (verschlüsselt, AUTH TLS auf Port 21). Viele Hoster kappen
+          # unverschlüsselte Datenverbindungen (Fehler: ECONNRESET).
+          protocol: ftps
+          security: strict
           state-name: .ftp-deploy-sync-state.json
           exclude: |
             **/.git*
