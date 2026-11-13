@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Matheschaf-Lernchat – Serverkonfiguration für den Projektordner
+# ---------------------------------------------------------------------------
+# 1. DATEN SPERREN: schueler.json (Namen, Handynummern, Verläufe),
+#    bausteine.json (Prompts), alle SQL-Dateien und Sicherungen liest
+#    ausschließlich PHP vom Datenträger. Direkter HTTP-Zugriff wird nicht
+#    gebraucht – ohne diese Regeln kann jede Person die Dateien herunterladen.
+# 2. Bibliotheken/Zugangsdaten (config.php, config_local.php, config_live.php)
+#    und die Ordner inc/ + migrations/ werden nie direkt aufgerufen.
+# 3. CSS/JS ohne Cache (HTML/PHP setzt die Header selbst).
+# ---------------------------------------------------------------------------
+
+# Keine Verzeichnisauflistung (verrät sonst Dateinamen wie die Sicherungen).
+# Falls der Hoster "Options" in .htaccess verbietet (Fehler 500), nur diese
+# drei Zeilen entfernen – die Sperren unten bleiben davon unberührt.
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# ---- Sperren: Datendateien, Sicherungen, Notizen, Archive ------------------
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(json|sqlite3?|sql|db|ini|env|md|txt|log|bak|old|zip|tar|gz)$">
+        Require all denied
+    </FilesMatch>
+    # Bibliotheken mit Schlüsseln + Zugangsdaten (lokal und live)
+    <FilesMatch "^(api_keys|config|config_local|config_live)\.php$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# Fallback für altes Apache 2.2 (ohne mod_authz_core).
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(json|sqlite3?|sql|db|ini|env|md|txt|log|bak|old|zip|tar|gz)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "^(api_keys|config|config_local|config_live)\.php$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# ---- Sperren: Programmteile, die nur per include laufen --------------------
+# inc/ (Konfiguration, DB, Login), migrations/ (Schema) und dumps/ (DB-Dumps)
+# nie direkt aufrufen.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(inc|migrations|dumps)(/|$) - [F,L]
+</IfModule>
+
+# ---- Cache: verhindert veraltete CSS/JS im Browser ------------------------
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+

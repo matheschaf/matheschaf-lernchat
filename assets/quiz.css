@@ -1,0 +1,516 @@
+/* ------------------------------------------------------------------
+   Matheschaf – Quiz (Editor-Fragenzeilen + Testlauf)
+   Ergänzt admin2.css; alle Quiz-spezifischen Klassen stehen hier.
+   ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------- Editor: Zeilen */
+
+.quiz-abschnitt {
+    margin: 22px 0 10px;
+    font-size: 16px;
+}
+
+.quiz-abschnitt .meta {
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--ms-muted);
+    display: block;
+    margin-top: 2px;
+}
+
+.field--schmal input {
+    max-width: 120px;
+}
+
+.quiz-zeilen {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quiz-zeile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quiz-nr {
+    flex: 0 0 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--ms-green);
+    border-radius: 50%;
+}
+
+.quiz-zeile input {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 9px 11px;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+}
+
+.quiz-zeile input:focus {
+    outline: 2px solid var(--ms-green);
+    outline-offset: 1px;
+}
+
+.quiz-weg {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 1;
+    color: #b3261e;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.quiz-weg:hover {
+    background: #fdecea;
+}
+
+.quiz-prompt-box summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ms-green-dark);
+}
+
+.quiz-prompt {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #23301f;
+    background: #fbfaf5;
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+    resize: vertical;
+}
+
+/* ---------------------------------------------------- Testlauf: Aufbau */
+
+.is-quiz {
+    background:
+        radial-gradient(1100px 520px at 12% -10%, #e8f5e9 0%, rgba(232, 245, 233, 0) 60%),
+        radial-gradient(900px 460px at 95% 0%, #fff3d6 0%, rgba(255, 243, 214, 0) 55%),
+        linear-gradient(180deg, #f7f4ec 0%, #eef6ea 55%, #f3f8ff 100%);
+    background-attachment: fixed;
+}
+
+.is-quiz .wrap {
+    max-width: 780px;
+}
+
+.quiz-kopf {
+    padding-bottom: 8px;
+}
+
+/* ------------------------------------------------- Zuschauer-Tribüne */
+
+.quiz-buehne {
+    position: relative;
+    margin: 4px 0 10px;
+    padding: 10px 10px 0;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffe9b3 0%, #ffd166 42%, #f4a315 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .6),
+        0 6px 18px rgba(120, 82, 8, .18);
+    overflow: hidden;
+}
+
+.quiz-buehne::before {
+    /* bunte Wimpelkette */
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 12px;
+    background: repeating-linear-gradient(90deg,
+        #e53935 0 14px, #fdd835 14px 28px, #43a047 28px 42px,
+        #1e88e5 42px 56px, #8e24aa 56px 70px);
+    opacity: .95;
+}
+
+.quiz-tribuene {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.tribuene-reihe {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 2px;
+}
+
+.tribuene-reihe--hinten {
+    opacity: .78;
+    transform: scale(.86);
+    transform-origin: bottom center;
+}
+
+.tribuene-reihe--vorn {
+    margin-top: -18px;
+}
+
+/* Die Bilder schrumpfen mit dem Gerät: fünf Schafe passen auch auf 320 px */
+.tribuene-schaf {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 84px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 3px 4px rgba(60, 40, 0, .25));
+    animation: ms-schaf-wippen 3.4s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * .28s);
+    transform-origin: 50% 92%;
+}
+
+.tribuene-reihe--vorn .tribuene-schaf {
+    max-width: 104px;
+}
+
+@keyframes ms-schaf-wippen {
+    /* kleines Hüpfen: kurz ducken, abspringen, kleiner Nachhüpfer */
+    0%, 100% { transform: translateY(0) rotate(-1deg) scaleY(1); }
+    8%       { transform: translateY(1px) rotate(-1deg) scaleY(.97); }
+    28%      { transform: translateY(-9px) rotate(1.5deg) scaleY(1.03); }
+    44%      { transform: translateY(0) rotate(1deg) scaleY(1); }
+    60%      { transform: translateY(-4px) rotate(-1deg); }
+    76%      { transform: translateY(0) rotate(0deg); }
+}
+
+.tribuene-boden {
+    height: 22px;
+    margin: 2px -10px 0;
+    background: repeating-linear-gradient(90deg, #b3651c 0 18px, #9c5517 18px 36px);
+    border-top: 3px solid #8a4a12;
+    box-shadow: inset 0 6px 10px rgba(0, 0, 0, .18);
+}
+
+/* Jubel: alle hüpfen, Buh: alle schütteln */
+.quiz-tribuene.ist-jubel .tribuene-schaf {
+    animation: ms-schaf-jubel .5s ease-in-out 3;
+}
+
+.quiz-tribuene.ist-buh .tribuene-schaf {
+    animation: ms-schaf-buh .45s ease-in-out 2;
+}
+
+@keyframes ms-schaf-jubel {
+    0%, 100% { transform: translateY(0) scale(1); }
+    35%      { transform: translateY(-16px) scale(1.05); }
+    70%      { transform: translateY(-3px) scale(.98); }
+}
+
+@keyframes ms-schaf-buh {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(-7deg) translateX(-3px); }
+    75%      { transform: rotate(7deg) translateX(3px); }
+}
+
+.quiz-setup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+}
+
+.quiz-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ms-muted);
+}
+
+.quiz-setup select,
+.quiz-setup input {
+    padding: 9px 11px;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+}
+
+#quiz-name {
+    width: 130px;
+}
+
+.quiz-chat {
+    min-height: 280px;
+    max-height: 56vh;
+    overflow-y: auto;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Fragenkarte: Fragetext und Antwortknöpfe sitzen in einer Blase */
+.quiz-chat .msg-row--frage {
+    width: 100%;
+}
+
+.msg-bubble--frage {
+    max-width: 100%;
+    width: 100%;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbf5 100%);
+    border: 1px solid #cfe3cd;
+    border-radius: 16px;
+}
+
+.quiz-chip {
+    display: inline-block;
+    align-self: flex-start;
+    margin-bottom: 8px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    color: #14310f;
+    background: var(--ms-accent-soft);
+    border: 1px solid #f0d08a;
+    border-radius: 999px;
+}
+
+.quiz-optionen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Sanduhr, solange die KI die Frage holt */
+.msg-bubble--denkt {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+}
+
+.quiz-sanduhr {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 1;
+    animation: ms-sanduhr-drehen 1.8s ease-in-out infinite;
+}
+
+.quiz-denk-text {
+    color: var(--ms-muted);
+}
+
+@keyframes ms-sanduhr-drehen {
+    0%, 40%   { transform: rotate(0deg); }
+    60%, 100% { transform: rotate(180deg); }
+}
+
+.quiz-opt {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 11px;
+    font: inherit;
+    font-size: 14.5px;
+    line-height: 1.3;
+    text-align: left;
+    color: #17240f;
+    background: #fff;
+    border: 2px solid var(--ms-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .08s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.quiz-opt:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(32, 48, 31, .12);
+}
+
+.quiz-opt:disabled {
+    cursor: default;
+    opacity: .55;
+}
+
+.quiz-opt-buchstabe {
+    flex: 0 0 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 50%;
+}
+
+/* Fröhliche Farben je Buchstabe: A blau, B orange, C grün, D violett */
+.quiz-opt--a { border-color: #9fc6f2; background: #f2f8ff; }
+.quiz-opt--a .quiz-opt-buchstabe { background: #1e6fd9; }
+.quiz-opt--b { border-color: #f3cf94; background: #fff8ec; }
+.quiz-opt--b .quiz-opt-buchstabe { background: #e38908; }
+.quiz-opt--c { border-color: #a9d8ab; background: #f3fbf3; }
+.quiz-opt--c .quiz-opt-buchstabe { background: #2f7d32; }
+.quiz-opt--d { border-color: #d0b3e6; background: #faf4ff; }
+.quiz-opt--d .quiz-opt-buchstabe { background: #8e24aa; }
+
+.quiz-opt.ist-gewaehlt {
+    border-color: var(--ms-green-dark);
+    box-shadow: 0 0 0 3px rgba(47, 125, 50, .16);
+}
+
+.quiz-chat .msg-row {
+    display: flex;
+}
+
+.quiz-chat .msg-row--ich {
+    justify-content: flex-end;
+}
+
+.quiz-chat .msg-row--gegen {
+    justify-content: flex-start;
+}
+
+/* Bewertung sichtbar machen, ohne den Chat umzubauen */
+.quiz-chat .msg-row.ist-richtig .msg-bubble {
+    border-color: #2f7d32;
+    box-shadow: 0 0 0 2px rgba(47, 125, 50, .18);
+}
+
+.quiz-chat .msg-row.ist-falsch .msg-bubble {
+    border-color: #b3261e;
+    box-shadow: 0 0 0 2px rgba(179, 38, 30, .16);
+    animation: ms-quiz-wackeln .4s ease-in-out;
+}
+
+@keyframes ms-quiz-wackeln {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-4px); }
+    75%      { transform: translateX(4px); }
+}
+
+/* --------------------------------------------------- Testlauf: Bedienung */
+
+.quiz-composer {
+    margin-top: 8px;
+}
+
+.quiz-ton {
+    margin-left: auto;
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+    line-height: 1;
+    color: #fff;
+    background: rgba(255, 255, 255, .16);
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------------- Konfetti */
+
+.konfetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.konfetti {
+    position: absolute;
+    top: -24px;
+    border-radius: 2px;
+    animation: ms-konfetti-fall var(--dauer, 2s) linear var(--delay, 0s) forwards;
+}
+
+@keyframes ms-konfetti-fall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(var(--dreh, 360deg)); opacity: .9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .konfetti { display: none; }
+    .quiz-chat .msg-row.ist-falsch .msg-bubble { animation: none; }
+    .quiz-sanduhr,
+    .tribuene-schaf { animation: none; }
+}
+
+@media (max-width: 560px) {
+    .quiz-zeile {
+        flex-wrap: wrap;
+    }
+
+    .quiz-zeile input {
+        flex: 1 1 100%;
+        order: 2;
+    }
+
+    .quiz-nr {
+        order: 1;
+    }
+
+    .quiz-weg {
+        order: 3;
+    }
+
+    /* Antwortknöpfe untereinander, damit der Text lesbar bleibt */
+    .quiz-optionen {
+        grid-template-columns: 1fr;
+    }
+
+    .tribuene-schaf {
+        max-width: 66px;
+    }
+
+    .tribuene-reihe--vorn .tribuene-schaf {
+        max-width: 80px;
+    }
+}
+
+/* ------------------------------------------------- iPhone / Notch / Höhe */
+
+/* Dynamische Höhe: Safari rechnet mit der eingeblendeten Adressleiste */
+@supports (height: 1dvh) {
+    .quiz-chat {
+        max-height: 56dvh;
+    }
+}
+
+/* Im Standalone-Modus (Zum Home-Bildschirm) liegt der Inhalt unter Notch
+   und Home-Indikator – dort braucht die Seite Sicherheitsabstand. */
+@supports (padding: env(safe-area-inset-top)) {
+    .is-quiz .topbar {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .is-quiz .wrap {
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+
+    .is-quiz .quiz-composer {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}

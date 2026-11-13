@@ -1,0 +1,413 @@
+/* ---------------------------------------------------------------------------
+   Dialog-Recorder (Lern-Bausteine)
+   Ergänzt admin2.css: dort stehen .bubble-row/.bubble/.bubble-tools schon.
+
+   Die Tastatur-CSS wird mitgeladen, damit ein einziger <link> genügt –
+   sonst sieht die Bildschirmtastatur roh aus (genau das war der Fehler).
+   ------------------------------------------------------------------------- */
+
+@import url("keyboard2.css");
+
+.dialog-editor {
+    margin-bottom: 14px;
+}
+
+.bubble-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    min-height: 120px;
+    max-height: 46vh;
+    overflow-y: auto;
+    background: #f3f6ee;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+}
+
+.bubble-leer {
+    margin: 0;
+    padding: 24px 12px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ms-muted);
+}
+
+.bubble-text--leer {
+    color: var(--ms-muted);
+    font-style: italic;
+}
+
+.bubble-formel {
+    margin-top: 2px;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, .05);
+    border-radius: 8px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 13.5px;
+    overflow-x: auto;
+}
+
+.bubble-row--schueler .bubble-formel {
+    background: rgba(255, 255, 255, .7);
+}
+
+.bubble-bild {
+    display: block;
+    max-width: 180px;
+    max-height: 140px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.dialog-composer {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+    box-shadow: var(--ms-shadow);
+}
+
+.dialog-composer .radio-group {
+    display: flex;
+    gap: 6px;
+}
+
+.dialog-composer .radio-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #f1f4ec;
+    border: 1px solid var(--ms-border);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dialog-composer .radio-group input {
+    margin: 0;
+}
+
+.composer-input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.composer-input-row input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    font: inherit;
+}
+
+.send-btn {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #8fc25a 0%, #5f9134 100%);
+    color: #16260c;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    filter: brightness(1.06);
+}
+
+.attach-btn {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+    background: #f1f4ec;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.attach-btn:hover { background: #e6ecdd; }
+
+.dialog-vorschau {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #f7f9f3;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+}
+
+.dialog-vorschau[hidden] { display: none; }
+
+.dialog-vorschau img {
+    max-width: 96px;
+    max-height: 72px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.dialog-vorschau-hinweis {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2f7d32;
+}
+
+.dialog-upload-status {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ms-muted);
+    min-height: 1em;
+}
+
+.dialog-feld-hinweis {
+    margin: 2px 0 -4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    color: var(--ms-muted);
+}
+
+.bubble-hauptbild {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #1b5e20;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+}
+
+/* ---- Baustein öffnen (auffällige Leiste ganz oben) ----------------------- */
+
+.dialog-kopf {
+    margin: 0 0 16px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+    box-shadow: var(--ms-shadow);
+}
+
+.dialog-oeffnen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.dialog-oeffnen label {
+    font-weight: 700;
+}
+
+.dialog-oeffnen select {
+    flex: 1 1 260px;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    font: inherit;
+    background: #fff;
+}
+
+.btn-oeffnen {
+    background: linear-gradient(180deg, #8fc25a 0%, #5f9134 100%);
+    color: #16260c;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(95, 145, 52, .35);
+}
+
+.btn-oeffnen:hover {
+    filter: brightness(1.06);
+}
+
+.dialog-status {
+    margin: 10px 0 0;
+    font-size: 13.5px;
+    color: var(--ms-muted);
+}
+
+.dialog-kopf a {
+    color: #1b5e20;
+}
+
+/* ---- KI-Spinner (während der Prompt entsteht) ---------------------------- */
+
+.ki-spinner {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+    background: rgba(18, 26, 16, .55);
+    backdrop-filter: blur(2px);
+}
+
+.ki-spinner[hidden] {
+    display: none;
+}
+
+.ki-spinner__kreis {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, .25);
+    border-top-color: #9bd066;
+    animation: ms-ki-dreh .9s linear infinite;
+}
+
+.ki-spinner__text {
+    margin: 0;
+    max-width: 320px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .6);
+}
+
+@keyframes ms-ki-dreh {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ki-spinner__kreis { animation-duration: 2.4s; }
+}
+
+/* ---- Gefahrenzone: Baustein löschen -------------------------------------- */
+
+.dialog-gefahr {
+    margin: 26px 0 10px;
+    padding: 14px 16px;
+    background: #fff6f5;
+    border: 1px solid #f3c4bd;
+    border-radius: 14px;
+}
+
+.dialog-gefahr h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    color: #a01d12;
+}
+
+.dialog-gefahr .hinweis {
+    margin: 0 0 12px;
+}
+
+.btn--gefahr {
+    background: linear-gradient(180deg, #e05545 0%, #b32a1c 100%);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(179, 42, 28, .3);
+}
+
+.btn--gefahr:hover {
+    filter: brightness(1.06);
+}
+
+/* ---- Tastatur im Verwaltungs-Layout --------------------------------------
+   Auf breiten Bildschirmen werden die Tasten sonst endlos breit. Deshalb
+   begrenzen und mittig stellen; auf dem Handy bleibt alles voll breit. */
+
+.wrap [data-tastatur] {
+    max-width: 620px;
+    margin: 10px auto 0;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+}
+
+@media (min-width: 700px) {
+    .wrap .kb-key {
+        font-size: 14px;
+    }
+
+    .wrap .kb-row {
+        gap: 6px;
+    }
+}
+
+.dialog-composer math-field {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 4px 8px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 18px;
+}
+
+.dialog-composer input[name="bild"] {
+    padding: 8px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 13.5px;
+}
+
+.dialog-zeilen {
+    width: 100%;
+    min-height: 90px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 12.5px;
+}
+
+.dialog-zaehler {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ms-muted);
+}
+
+.schritt {
+    margin: 22px 0 10px;
+}
+
+.schritt__kopf {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.schritt__nummer {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #1b5e20;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.schritt h2 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.schritt p.hinweis {
+    margin: 4px 0 0 36px;
+}

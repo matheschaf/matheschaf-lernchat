@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Was NICHT ins Repository gehört und deshalb auch nie hochgeladen wird.
+# Regeln gelten ab hier (Ordner werden komplett ignoriert).
+# ---------------------------------------------------------------------------
+
+# Zugangsdaten – bleiben lokal, auf dem Server liegen sie schon.
+inc/config.local.php
+inc/config.live.php
+
+# Sicherungen, Datenbank-Dumps, Archive
+dumps/
+_sicherung/
+*.sql
+*.zip
+*.bak
+
+# Interne Doku (nicht für den Server)
+UEBERGABE.md
+NEU.md
+
+# Prüf- und Quellordner
+challenge_test/
+challenge_quellen/
+
+# Editor- und Systemreste
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# Arbeitsreste, die nicht auf den Server gehören
+Screenshot*.png
+idx.html
+
+# Bilder: liegen auf dem Server; der Recorder lädt neue Bilder direkt dorthin.
+# Für den Notfall (App-Bild ändern): Zeile auskommentieren, hochladen,
+# wieder einkommentieren.
+bilder/
+# Uebung: diese Zeile kommt gleich wieder weg

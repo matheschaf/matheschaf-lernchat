@@ -1,0 +1,244 @@
+/* ------------------------------------------------------------------
+   Matheschaf – Bildschirmtastatur (sauber, an MathLive angelehnt)
+   ------------------------------------------------------------------ */
+
+:root {
+    --kb-hoehe: clamp(280px, 46vh, 430px);
+    --kb-hoehe: clamp(280px, 46dvh, 430px);
+    --kb-gap: 5px;
+    --kb-pad: 8px;
+    --kb-safe: env(safe-area-inset-bottom, 0px);
+    --kb-key: #ffffff;
+    --kb-key-border: #d9dfe7;
+    --kb-key-text: #1f2937;
+    --kb-action: #eef1f5;
+    --kb-action-text: #374151;
+    --kb-bg: #f6f8fb;
+    --kb-border: #e2e8f0;
+    --kb-accent: #2f7d32;
+    --kb-accent-soft: #e8f5e9;
+}
+
+[data-tastatur] {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    height: var(--kb-hoehe);
+    background: var(--kb-bg);
+    border: 1px solid var(--kb-border);
+    border-radius: 12px;
+    padding: var(--kb-pad);
+    padding-bottom: calc(var(--kb-pad) + var(--kb-safe));
+    gap: var(--kb-gap);
+    transition: height .25s ease-in-out;
+    overflow: hidden;
+}
+
+[data-tastatur][hidden] {
+    display: none;
+}
+
+[data-tastatur].kb-geschlossen {
+    height: 46px;
+}
+
+[data-tastatur].kb-geschlossen .kb-layer {
+    display: none !important;
+}
+
+/* Smart-Leiste */
+.kb-strip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.kb-chip {
+    flex: 1;
+    height: 32px;
+    padding: 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    background: #fff;
+    border: 1px solid var(--kb-border);
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    transition: background .08s, transform .08s, box-shadow .08s;
+}
+
+.kb-chip:active {
+    background: #eef2f7;
+    transform: translateY(1px);
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, .12);
+}
+
+/* Tabs (Ebenen-Umschalter) */
+.kb-tabs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.kb-tab {
+    flex: 1;
+    height: 38px;
+    padding: 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #475569;
+    background: #fff;
+    border: 1px solid var(--kb-border);
+    border-radius: 9px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    transition: background .12s, color .12s, border-color .12s;
+}
+
+.kb-tab--aktiv {
+    background: var(--kb-accent);
+    border-color: var(--kb-accent);
+    color: #fff;
+}
+
+.kb-tab--icon {
+    flex: 0 0 auto;
+    min-width: 42px;
+}
+
+/* Ebenen */
+.kb-layer {
+    display: none;
+    flex: 1;
+    min-height: 0;
+}
+
+.kb-layer--aktiv {
+    display: flex;
+}
+
+.kb-layer--text {
+    flex-direction: column;
+    gap: var(--kb-gap);
+    width: 100%;
+}
+
+.kb-layer--math.kb-layer--aktiv {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: var(--kb-gap);
+    width: 100%;
+}
+
+.kb-layer--erweitert.kb-layer--aktiv {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: var(--kb-gap);
+    width: 100%;
+}
+
+.kb-row {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    gap: var(--kb-gap);
+}
+
+/* Tasten */
+.kb-key {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--kb-key-text);
+    background: var(--kb-key);
+    border: 1px solid var(--kb-key-border);
+    border-radius: 9px;
+    box-shadow: 0 1px 1px rgba(15, 23, 42, .06);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+    transition: background .08s, transform .08s, box-shadow .08s;
+}
+
+.kb-key:active {
+    background: #eef2f7;
+    transform: translateY(1px);
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, .12);
+}
+
+.kb-key.aktion {
+    background: var(--kb-action);
+    color: var(--kb-action-text);
+}
+
+.kb-key--wide {
+    flex: 1.6;
+}
+
+.kb-key--small {
+    font-size: 12px;
+    letter-spacing: -.3px;
+}
+
+.kb-key.wurzel {
+    background: var(--kb-accent-soft);
+    border-color: #bcd8bf;
+}
+
+.kb-layer--math .kb-key,
+.kb-layer--erweitert .kb-key {
+    font-size: 16px;
+}
+
+.kb-layer--erweitert .kb-key {
+    font-size: 14px;
+    padding: 0 2px;
+}
+
+.kb-layer--text.upper .kb-key {
+    text-transform: uppercase;
+}
+
+/* MathLive-eigene UI ausblenden (Fallback zu den Attributen) */
+math-field::part(menu-toggle),
+math-field::part(virtual-keyboard-toggle) {
+    display: none;
+}
+
+/* Aktives Eingabefeld hervorheben (grüner Rahmen, kein Leuchten) */
+input.kb-aktiv,
+math-field.kb-aktiv {
+    border: 2px solid #1b5e20 !important;
+}
+
+@media (min-width: 800px) {
+    :root {
+        --kb-hoehe: clamp(320px, 46vh, 440px);
+        --kb-hoehe: clamp(320px, 46dvh, 440px);
+    }
+
+    .kb-tab {
+        font-size: 15px;
+    }
+}
+
+/* Touch-Targets ohne Doppel-Tap-Zoom (iPhone/Android) */
+.kb-key,
+.kb-chip,
+.kb-tab {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}

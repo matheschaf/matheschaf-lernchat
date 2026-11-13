@@ -1,0 +1,2920 @@
+/* ------------------------------------------------------------------
+   Matheschaf – Lehrer-Bereich (starter.php), mobile-first
+   ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --ms-green: #2f7d32;
+    --ms-green-dark: #1b5e20;
+    --ms-green-light: #e8f5e9;
+    --ms-cream: #f7f4ec;
+    --ms-card: #ffffff;
+    --ms-text: #20301f;
+    --ms-muted: #71806f;
+    --ms-accent: #f2a007;
+    --ms-accent-soft: #fff3d6;
+    --ms-border: #e4e7dd;
+    --ms-radius: 14px;
+    --ms-shadow: 0 1px 2px rgba(32, 48, 31, .06), 0 6px 18px rgba(32, 48, 31, .06);
+}
+
+html,
+body {
+    margin: 0;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    color: var(--ms-text);
+    background: var(--ms-cream);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.wrap {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+}
+
+/* ---------------------------------------------------------------- Header */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(135deg, #1b5e20 0%, #2f7d32 60%, #388e3c 100%);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(27, 94, 32, .28);
+}
+
+.topbar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 12px;
+}
+
+.brand-text {
+    line-height: 1.1;
+}
+
+.brand-text h1 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+.brand-text p {
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, .85);
+}
+
+/* --------------------------------------------------------------- Sections */
+
+.section {
+    margin-top: 26px;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 14px;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.section-head .count {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ms-muted);
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+/* ----------------------------------------------------------------- Schüler */
+
+.students {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.student {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
+    background: var(--ms-card);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    transition: transform .12s, box-shadow .12s;
+}
+
+.student:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(32, 48, 31, .1);
+}
+
+.avatar {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 17px;
+    color: #fff;
+    background: var(--ms-green);
+    border-radius: 50%;
+}
+
+.student-body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.student-name {
+    margin: 0;
+    font-weight: 700;
+    font-size: 15.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.student-meta {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    color: var(--ms-muted);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.pill--green {
+    background: var(--ms-green-light);
+    color: var(--ms-green-dark);
+}
+
+.pill--amber {
+    background: var(--ms-accent-soft);
+    color: #8a5b00;
+}
+
+.pill--gray {
+    background: #f0f1ee;
+    color: var(--ms-muted);
+}
+
+.pill--ki {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* Baustein ohne System-Prompt – die KI kann dann nicht antworten. */
+.pill--warnung {
+    background: #fdecea;
+    color: #b3261e;
+}
+
+/* Quiz-Zuordnung für die 4. Würfelfläche ("Teste dein Wissen") */
+.pill--quiz {
+    background: #ede7f6;
+    color: #5e35b1;
+}
+
+.student-action {
+    flex: 0 1 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: auto;
+}
+
+/* Klickbarer Bereich der Schülerkarte (Avatar + Text); daneben die Buttons. */
+.student-main {
+    flex: 1 1 200px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Rückmeldung nach dem Kopieren / SMS-Versand */
+.btn.is-ok {
+    color: #1e6b2e;
+    background: #e8f5e9;
+    border-color: #b7dfb9;
+}
+
+.btn.is-fehler {
+    color: #a4231a;
+    background: #fdecea;
+    border-color: #f5b5ae;
+}
+
+.btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+@media (max-width: 430px) {
+    .student-action .btn {
+        padding: 8px 10px;
+        font-size: 12.5px;
+    }
+}
+
+.student-action .btn {
+    white-space: nowrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: #fff;
+    background: var(--ms-green);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.btn:hover {
+    background: var(--ms-green-dark);
+}
+
+/* ------------------------------------------------------------------- Tools */
+
+.tools {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--ms-card);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+}
+
+.tool-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    background: var(--ms-green-light);
+    border-radius: 12px;
+}
+
+.tool h3 {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 700;
+}
+
+.tool p {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: var(--ms-muted);
+}
+
+.tool--planned {
+    opacity: .72;
+}
+
+.tool--planned .tool-icon {
+    background: #f0f1ee;
+}
+
+.soon {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: #8a5b00;
+    background: var(--ms-accent-soft);
+    padding: 4px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ Footer */
+
+.foot {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ms-muted);
+}
+
+/* ------------------------------------------------------------- Responsive */
+
+@media (min-width: 620px) {
+    .students,
+    .tools {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 960px) {
+    .students {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* --------------------------------------------------------------- Formular */
+
+input[type="radio"] {
+    accent-color: var(--ms-green);
+}
+
+button {
+    font-family: inherit;
+}
+
+.back-link {
+    margin: 18px 0 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ms-muted);
+}
+
+.form {
+    background: var(--ms-card);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    padding: 18px;
+    margin-top: 16px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+.field > label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    color: var(--ms-muted);
+}
+
+.field input[type="text"],
+.field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.field input[type="text"]:focus,
+.field textarea:focus {
+    border-color: var(--ms-green);
+    box-shadow: 0 0 0 3px rgba(47, 125, 50, .15);
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.form-error {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: #b3261e;
+    background: #fdecea;
+    border: 1px solid #f5c6c2;
+    border-radius: 10px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.btn--secondary {
+    color: var(--ms-text);
+    background: #eef0ec;
+    border: 1px solid var(--ms-border);
+}
+
+.btn--secondary:hover {
+    background: #e2e6df;
+}
+
+.btn--danger {
+    background: #c62828;
+}
+
+.btn--danger:hover {
+    background: #a32222;
+}
+
+/* -------------------------------------------------------- Dialog-Recorder */
+
+.dialog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.dialog-empty {
+    margin: 0;
+    padding: 18px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ms-muted);
+    background: #fbfcf9;
+    border: 1px dashed var(--ms-border);
+    border-radius: 12px;
+}
+
+.bubble-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bubble-row--lehrer {
+    align-items: flex-start;
+}
+
+.bubble-row--schueler {
+    align-items: flex-end;
+}
+
+.bubble {
+    position: relative;
+    max-width: 86%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    box-shadow: var(--ms-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bubble-row--lehrer .bubble {
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-bottom-left-radius: 4px;
+}
+
+.bubble-row--schueler .bubble {
+    background: #dcf7d0;
+    border: 1px solid #c6e8ba;
+    border-bottom-right-radius: 4px;
+}
+
+.bubble-role {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    color: var(--ms-muted);
+}
+
+.bubble-row--schueler .bubble-role {
+    color: #3e7d3a;
+}
+
+.bubble-text {
+    font-size: 14.5px;
+    line-height: 1.45;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.bubble-tools {
+    position: static;
+    display: flex;
+    gap: 5px;
+    margin: 0 2px;
+    order: 2;
+}
+
+.bubble-edit,
+.bubble-del,
+.bubble-rollen {
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    line-height: 1;
+    color: #fff;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+    padding: 0;
+}
+
+.bubble-edit {
+    background: #2f7d32;
+}
+
+.bubble-rollen {
+    background: #1565c0;
+}
+
+.bubble-del {
+    background: #c62828;
+}
+
+.bubble-row--edit .bubble {
+    outline: 2px solid var(--ms-accent);
+    outline-offset: 1px;
+}
+
+.edit-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1f2937;
+    background: #fff3d6;
+    border: 1px solid #f2c94c;
+    border-radius: 10px;
+}
+
+.edit-banner[hidden] {
+    display: none;
+}
+
+.edit-cancel {
+    flex: 0 0 auto;
+    padding: 4px 10px;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #fff;
+    background: #c62828;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------- Baustein-Generator */
+
+.gen-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px;
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.gen-line {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+}
+
+.gen-line strong {
+    flex: 0 0 auto;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    color: var(--ms-muted);
+}
+
+.gen-line code {
+    font-size: 13px;
+    color: #1565c0;
+    background: #eef4fb;
+    padding: 1px 6px;
+    border-radius: 5px;
+}
+
+.gen-group {
+    margin-bottom: 14px;
+}
+
+.gen-group-title {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    color: var(--ms-muted);
+}
+
+.gen-group-title--leicht { color: #2e7d32; }
+.gen-group-title--mittel { color: #ed6c02; }
+.gen-group-title--schwer { color: #c62828; }
+
+.gen-group-fields {
+    display: grid;
+    gap: 8px;
+}
+
+.gen-group-fields input {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    outline: none;
+}
+
+.gen-group-fields input:focus {
+    border-color: var(--ms-green);
+    box-shadow: 0 0 0 3px rgba(47, 125, 50, .15);
+}
+
+/* Ein Beispiel = Textfeld + Formelfeld (wie im Chat und im Dialog-Editor). */
+.gen-beispiel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
+}
+
+.gen-beispiel math-field {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.gen-beispiel math-field:focus,
+.gen-beispiel math-field.kb-aktiv {
+    border-color: var(--ms-green);
+    box-shadow: 0 0 0 3px rgba(47, 125, 50, .15);
+}
+
+@media (max-width: 620px) {
+    .gen-beispiel {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.form select {
+    width: 100%;
+    padding: 11px 13px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    outline: none;
+}
+
+#prompt {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+.form-notice {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: #1e6b2e;
+    background: #e8f5e9;
+    border: 1px solid #b7dfb9;
+    border-radius: 10px;
+}
+
+.form-warnung {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: #8a5200;
+    background: #fff6e5;
+    border: 1px solid #f0d9a8;
+    border-radius: 10px;
+}
+
+/* ------------------------------------- Fortschritt „Prompt erzeugen" */
+
+.gen-status {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px 12px;
+    align-items: center;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #f2f7ef;
+    border: 1px solid #cfe3c8;
+    border-radius: 12px;
+}
+
+.gen-status[hidden] {
+    display: none;
+}
+
+.gen-spinner {
+    width: 26px;
+    height: 26px;
+    border: 3px solid #cfe3c8;
+    border-top-color: var(--ms-green);
+    border-radius: 50%;
+    animation: gen-spinner-dreh .8s linear infinite;
+}
+
+@keyframes gen-spinner-dreh {
+    to { transform: rotate(360deg); }
+}
+
+.gen-status-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    color: var(--ms-muted);
+}
+
+.gen-status-text strong {
+    font-size: 14.5px;
+    color: var(--ms-text);
+}
+
+.gen-balken {
+    grid-column: 1 / -1;
+    height: 8px;
+    background: #e2ebdd;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.gen-balken > span {
+    display: block;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--ms-green), #86efac);
+    border-radius: 999px;
+    animation: gen-balken-lauf 1.5s ease-in-out infinite;
+}
+
+@keyframes gen-balken-lauf {
+    0%   { transform: translateX(-110%); }
+    100% { transform: translateX(320%); }
+}
+
+.gen-meldung {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    border-radius: 10px;
+}
+
+.gen-meldung[hidden] {
+    display: none;
+}
+
+.gen-meldung--gut {
+    color: #1e6b2e;
+    background: #e8f5e9;
+    border: 1px solid #b7dfb9;
+}
+
+.gen-meldung--warnung {
+    color: #8a5200;
+    background: #fff6e5;
+    border: 1px solid #f0d9a8;
+}
+
+.gen-meldung--fehler {
+    color: #b3261e;
+    background: #fdecea;
+    border: 1px solid #f5c6c2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gen-spinner,
+    .gen-balken > span {
+        animation: none;
+    }
+
+    .gen-balken > span {
+        width: 100%;
+    }
+}
+
+/* --------------------------------------------------------- Schüler-Chat */
+
+.chat-wrap {
+    max-width: 760px;
+}
+
+.stufe-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0 10px;
+    flex-wrap: wrap;
+}
+
+.stufe-bar > span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ms-muted);
+}
+
+.stufe-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.stufe-btn {
+    padding: 7px 14px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ms-text);
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 999px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.stufe-btn.is-on {
+    color: #fff;
+    background: var(--ms-green);
+    border-color: var(--ms-green);
+}
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    min-height: 220px;
+    max-height: 55vh;
+    overflow-y: auto;
+    background: #f4f6f1;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+}
+
+.msg-row {
+    display: flex;
+}
+
+.msg-row--ich { justify-content: flex-end; }
+.msg-row--gegen { justify-content: flex-start; }
+
+.msg-bubble {
+    max-width: 82%;
+    padding: 9px 13px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: var(--ms-shadow);
+}
+
+.msg-row--ich .msg-bubble {
+    background: #d9fdd3;
+    border: 1px solid #c6e8ba;
+    border-bottom-right-radius: 4px;
+}
+
+.msg-row--gegen .msg-bubble {
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-bottom-left-radius: 4px;
+}
+
+.msg-text {
+    font-size: 15px;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.msg-formel {
+    font-size: 15px;
+    color: #1e293b;
+}
+
+/* ------------------------------------------------- Nur-Lese-Ansicht (Mitlesen) */
+/* Zeigt ausschließlich den Chatverlauf – volle Höhe, kein Drumherum. */
+
+.is-mitlesen {
+    margin: 0;
+    padding: 12px;
+    background: var(--ms-cream);
+}
+
+.chat-list--lesen {
+    max-width: 760px;
+    margin: 0 auto;
+    max-height: none;
+    overflow: visible;           /* kein inneres Scrollen – die Seite selbst scrollt */
+    min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
+    padding: 16px;
+}
+
+.msg-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--ms-muted);
+    font-size: 13.5px;
+}
+
+.chat-composer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+}
+
+.chat-composer math-field {
+    width: 100%;
+    min-height: 46px;
+    padding: 8px 12px;
+    font-size: 16px;
+    background: #fbfcf9;
+    border: 1px solid var(--ms-green);
+    border-radius: 10px;
+}
+
+.stufe-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.stufe-screen h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stufe-screen .stufe-btn {
+    padding: 12px 22px;
+    font-size: 15px;
+}
+
+.chat-stage[hidden] {
+    display: none;
+}
+
+.msg-bubble.msg-thinking {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 14px;
+    background: #e8f5e9;
+    border: 1px solid #b7dfb9;
+}
+
+.msg-thinking .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #aab4be;
+    animation: ms-think 1.2s infinite ease-in-out;
+}
+
+.msg-thinking .dot:nth-child(2) { animation-delay: .15s; }
+.msg-thinking .dot:nth-child(3) { animation-delay: .3s; }
+
+@keyframes ms-think {
+    0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+    30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ------------------------------------------------------ Flügel = 3D-Würfel */
+/* Die drei Bereiche sind Flächen eines Würfels:
+     linker Flügel =   0°, Chat =  90°, Wiese = 180°.
+   Gedreht wird der Würfel selbst: 0° → -90° → -180° (goTo() in assets/chat.js).
+   --tiefe ist die halbe Würfelbreite; JS setzt sie exakt, damit die Kanten
+   beim Drehen sauber aufeinandertreffen. */
+
+.fluegel-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    /* Waagerechte Gesten gehören dem Würfel, senkrecht scrollt die Seite. */
+    touch-action: pan-y;
+    overflow: hidden;
+    border-radius: 22px;
+    perspective: 1500px;
+    perspective-origin: 50% 42%;
+}
+
+.wuerfel {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    transform-style: preserve-3d;
+    /* Im Ruhezustand absichtlich KEINE Drehung: nur eine flache Fläche ist
+       zuverlässig anklickbar. Die 3D-Lage setzt chat.js nur zum Drehen. */
+    transform: none;
+    transition: transform .62s cubic-bezier(.22, .61, .36, 1);
+    will-change: transform;
+    --tiefe: 180px;                          /* Fallback, JS setzt Breite/2 */
+}
+
+/* Solange der Finger zieht, folgt der Würfel direkt (ohne Transition). */
+.wuerfel.is-ziehen {
+    transition: none;
+}
+
+/* Alle drei Flächen liegen übereinander in derselben Rasterzelle. */
+.wuerfel > * {
+    grid-area: 1 / 1;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* RUHEZUSTAND: keine 3D-Drehung, nur die vordere Fläche ist sichtbar und liegt
+   flach. Grund: Chrome findet in 3D-transformierten Flächen keine Klickziele
+   mehr (Karten wären sichtbar, aber nicht anklickbar). */
+.wuerfel:not(.wuerfel--3d) > * {
+    transform: none;
+    visibility: hidden;
+}
+
+.wuerfel:not(.wuerfel--3d) > .ist-vorn {
+    visibility: visible;
+}
+
+/* 3D-MODUS – wird von chat.js nur während der Drehung gesetzt. */
+.wuerfel--3d > * {
+    visibility: visible;
+}
+
+.wuerfel--3d > .wing--left  { transform: rotateY(0deg)   translateZ(var(--tiefe)); }
+.wuerfel--3d > .chat-col    { transform: rotateY(90deg)  translateZ(var(--tiefe)); }
+.wuerfel--3d > .wing--right { transform: rotateY(180deg) translateZ(var(--tiefe)); }
+
+/* Eingabefelder behalten ihr normales Verhalten (Textauswahl statt Wischen). */
+.fluegel-wrap input,
+.fluegel-wrap textarea,
+.fluegel-wrap select,
+.fluegel-wrap math-field,
+.fluegel-wrap [data-tastatur] {
+    touch-action: auto;
+}
+
+.wing-inner {
+    padding: 16px;
+    height: 100%;
+    min-height: 320px;
+    background: #f4f6f1;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+    box-sizing: border-box;
+}
+
+.wing-inner h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.wing-hint {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ms-muted);
+}
+
+/* Linker Flügel mit Referenzbild: Bild ganz oben, volle Breite. */
+.wing-inner--bild {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    background: #f4f6f1;
+}
+
+.wing-bild {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    object-fit: contain;
+    object-position: top center;
+    background: #eef2e8;
+    border-radius: 14px 14px 0 0;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.wing-bild-titel {
+    margin: 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ms-muted);
+}
+
+.wing-arrow {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    line-height: 1;
+    color: #fff;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.wing-arrow:hover {
+    background: rgba(255, 255, 255, .15);
+}
+
+/* Am Würfel-Ende (links bzw. rechts außen): nichts mehr zu blättern. */
+.wing-arrow.is-off {
+    opacity: .3;
+    cursor: default;
+}
+
+.wing-arrow.is-off:hover {
+    background: transparent;
+}
+
+/* Kompakter Header im Chat (Titel mittig) */
+.is-chat .topbar-inner {
+    position: relative;
+    justify-content: center;
+    padding: 7px 12px;
+    gap: 8px;
+}
+
+.is-chat .brand-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.is-chat .brand-text {
+    text-align: center;
+}
+
+.is-chat .brand-text h1 {
+    font-size: 16px;
+}
+
+.is-chat .brand-text p {
+    font-size: 11px;
+}
+
+/* Kleines „?" neben dem Namen: öffnet hilfe.php (jederzeit, auf jeder Fläche). */
+.hilfe-frage {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    background: rgba(255, 255, 255, .22);
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 50%;
+    vertical-align: 2px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hilfe-frage:hover,
+.hilfe-frage:focus-visible {
+    color: #1b5e20;
+    background: rgba(255, 255, 255, .85);
+}
+
+.is-chat .wing-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+}
+
+.is-chat #wing-left-btn {
+    left: 6px;
+}
+
+.is-chat #wing-right-btn {
+    right: 6px;
+}
+
+/* Eingabefeld im Chat (rund, kompakt) */
+.chat-composer input[type="text"] {
+    padding: 11px 16px;
+    font-size: 16px;
+    color: var(--ms-text);
+    background: #fbfcf9;
+    border: 1px solid var(--ms-green);
+    border-radius: 22px;
+    outline: none;
+}
+
+.msg-thinking-label {
+    font-size: 13.5px;
+    color: var(--ms-muted);
+}
+
+.dialog-composer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    background: #f4f6f1;
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+}
+
+.dialog-composer .row {
+    display: flex;
+    gap: 8px;
+}
+
+.dialog-composer input[type="text"] {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 11px 13px;
+    font-size: 16px; /* ≥ 16px verhindert den iOS-Zoom beim Fokussieren */
+    color: var(--ms-text);
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    outline: none;
+}
+
+/* ------------------------------------------------------------------- CTA */
+
+.cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+    color: #fff;
+    background: linear-gradient(135deg, #1b5e20 0%, #2f7d32 100%);
+    border-radius: var(--ms-radius);
+    box-shadow: 0 8px 22px rgba(27, 94, 32, .25);
+    transition: transform .12s, box-shadow .12s;
+}
+
+.cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(27, 94, 32, .3);
+}
+
+.cta-icon {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    background: rgba(255, 255, 255, .18);
+    border-radius: 13px;
+}
+
+.cta h3 {
+    margin: 0;
+    font-size: 16.5px;
+    font-weight: 700;
+}
+
+.cta p {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .9);
+}
+
+.cta-arrow {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-size: 22px;
+    color: rgba(255, 255, 255, .9);
+}
+
+.tool--link {
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+}
+
+.tool--link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(32, 48, 31, .1);
+}
+
+.soon--ok {
+    color: var(--ms-green-dark);
+    background: var(--ms-green-light);
+}
+
+/* ------------------------------------------------ Kosten & Abrechnung */
+
+.kosten-karte {
+    background: var(--ms-card);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    overflow: hidden;
+}
+
+.kosten-zeile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--ms-border);
+    transition: background .12s;
+}
+
+.kosten-zeile:first-child {
+    border-top: 0;
+}
+
+.kosten-zeile:hover {
+    background: #f7faf5;
+}
+
+.kosten-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    background: var(--ms-green-light);
+    border-radius: 11px;
+}
+
+.kosten-text {
+    min-width: 0;
+}
+
+.kosten-text h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.kosten-text p {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    color: var(--ms-muted);
+}
+
+.kosten-marke {
+    margin-left: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: var(--ms-green-dark);
+    background: var(--ms-green-light);
+    border-radius: 999px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.kosten-pfeil {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-size: 18px;
+    color: var(--ms-muted);
+}
+
+/* ------------------------------------------------------ Baustein-Liste */
+
+.baustein-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.baustein-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background: var(--ms-card);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+}
+
+.baustein-card h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.baustein-card .meta {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ms-muted);
+}
+
+.baustein-card .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 620px) {
+    .baustein-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ------------------------------------------------------ Logo & Topbar-Link */
+
+img.brand-logo {
+    display: block;
+    background: transparent;
+    border-radius: 0;
+    object-fit: contain;
+}
+
+.topbar-link {
+    margin-left: auto;
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(255, 255, 255, .18);
+    border-radius: 999px;
+    transition: background .15s;
+}
+
+.topbar-link:hover {
+    background: rgba(255, 255, 255, .3);
+}
+
+/* --------------------------------------- Formel-Eingabe & Tastatur */
+
+.dialog-composer math-field {
+    width: 100%;
+    min-height: 46px;
+    padding: 8px 12px;
+    font-size: 16px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+}
+
+.composer-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.bubble-formel {
+    margin-top: 4px;
+    color: #1e293b;
+    font-size: 15px;
+}
+
+.bubble-formel math-div,
+.bubble-formel math-span {
+    display: block;
+}
+
+/* --------------------------------------------------- Anhang & Senden */
+
+.composer-attach {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    flex: 0 0 auto;
+}
+
+.composer-attach img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--ms-border);
+    background: #fff;
+}
+
+.composer-attach button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    line-height: 1;
+    color: #fff;
+    background: #c62828;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+
+.composer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.composer-actions .btn--secondary {
+    margin-left: auto;
+}
+
+.attach-btn {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    color: #54656f;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.attach-btn:hover {
+    background: rgba(11, 20, 26, .07);
+}
+
+.send-btn {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: var(--ms-green);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+}
+
+.send-btn:hover {
+    background: var(--ms-green-dark);
+}
+
+.send-btn:active {
+    transform: scale(.94);
+}
+
+.bubble-bild {
+    margin-top: 4px;
+}
+
+.bubble-bild img {
+    display: block;
+    max-width: 150px;
+    max-height: 88px;
+    border-radius: 8px;
+    cursor: zoom-in;
+    border: 1px solid var(--ms-border);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bubble-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1f2937;
+    background: #f1f5f9;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+/* ----------------------------------------------------------- Lightbox */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .85);
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 94vw;
+    max-height: 90vh;
+    padding:
+        env(safe-area-inset-top, 0px)
+        env(safe-area-inset-right, 0px)
+        env(safe-area-inset-bottom, 0px)
+        env(safe-area-inset-left, 0px);
+}
+
+.lightbox-content img {
+    display: block;
+    max-width: 94vw;
+    max-height: 86vh;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    line-height: 1;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(25%, -25%);
+}
+
+/* Kompakter Composer: Büroklammer + Textfeld + ⌨️ + Senden in einer Zeile */
+.composer-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.composer-input-row input[type="text"] {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
+
+.kb-toggle {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+
+/* ----------------------------------------------------------- Schafswiese */
+/* Rechter Flügel im Chat: Wiese als Hintergrund, ein Schaf pro Bonuspunkt. */
+
+.wing-inner--wiese {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #cfe3b8;
+}
+
+.wiese {
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    /* Bild selbst kommt aus config.php (WIESE_BILD) als Inline-Style. */
+    background-color: #cfe3b8;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+/* Ankerpunkt: left/top = Standpunkt (Füße) des Schafs auf der Wiese. */
+.schaf-ort {
+    position: absolute;
+    display: block;
+    line-height: 0;
+    transform: translate(-50%, -100%);
+    pointer-events: none;
+}
+
+.schaf {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 100%;
+    animation: ms-schaf-walk var(--dur, 6s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .28));
+    will-change: transform;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+@keyframes ms-schaf-walk {
+    0%   { transform: translateX(0) rotate(-1.6deg) scaleY(1); }
+    25%  { transform: translateX(calc(var(--dist, 18px) * .5)) rotate(0deg) scaleY(.985); }
+    50%  { transform: translateX(var(--dist, 18px)) rotate(1.6deg) scaleY(1); }
+    75%  { transform: translateX(calc(var(--dist, 18px) * .5)) rotate(0deg) scaleY(.985); }
+    100% { transform: translateX(0) rotate(-1.6deg) scaleY(1); }
+}
+
+/* Kopfzeile schwebt über der Wiese (lesbar dank Milchglas-Hintergrund). */
+.wiese-kopf {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, .82);
+    border: 1px solid rgba(32, 48, 31, .1);
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(19, 41, 17, .18);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.wiese-kopf h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ms-green-dark);
+}
+
+.wiese-zaehler {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ms-text);
+    white-space: nowrap;
+}
+
+.wiese-zaehler-hinweis {
+    font-weight: 400;
+    color: var(--ms-muted);
+}
+
+.wiese-leer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: 320px;
+    margin: 0;
+    padding: 10px 16px;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    text-align: center;
+    color: var(--ms-text);
+    background: rgba(255, 255, 255, .88);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(19, 41, 17, .16);
+}
+
+/* Nur im geöffneten Flügel animieren (spart CPU, solange die Wiese verdeckt ist). */
+.wing:not(.is-open) .schaf {
+    animation-play-state: paused;
+}
+
+/* ------------------------------------------------------------ Wetter */
+/* Deko über dem Wiesenbild: blockiert keine Klicks und wird vom Wiesenrand
+   (border-radius + overflow) beschnitten. Welches Wetter gilt, steht in
+   config.php (WIESE_WETTER), die Flocken kommen aus wiese_schneeflocken(). */
+
+.wetter {
+    position: absolute;
+    inset: 0;
+    z-index: 900;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: 13px;
+}
+
+/* ---------- Schnee ---------- */
+/* Pro Flocke eine Bahn in voller Wiesenhöhe: die Bahn fällt (nur transform,
+   also GPU), die Flocke darin pendelt seitlich hin und her. */
+
+.wetter--schnee {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .10) 0%, rgba(214, 228, 242, .05) 60%, rgba(255, 255, 255, 0) 100%);
+}
+
+.flocke-bahn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    animation-name: ms-schnee-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+}
+
+.flocke {
+    display: block;
+    width: var(--groesse, 4px);
+    height: var(--groesse, 4px);
+    margin-left: calc(var(--groesse, 4px) / -2);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, .9);
+    opacity: var(--deckkraft, .8);
+    animation-name: ms-schnee-drift;
+    animation-duration: var(--driftdauer, 4s);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    will-change: transform;
+}
+
+@keyframes ms-schnee-fall {
+    from { transform: translate3d(0, -14%, 0); }
+    to   { transform: translate3d(0, 100%, 0); }
+}
+
+@keyframes ms-schnee-drift {
+    from { transform: translate3d(calc(var(--drift, 12px) * -1), 0, 0); }
+    to   { transform: translate3d(var(--drift, 12px), 0, 0); }
+}
+
+/* ---------- Wolken ---------- */
+/* Ziehen langsam von rechts nach links. Animiert wird `left` (Prozent der
+   Wiesenbreite) – bei so wenigen, langsamen Wolken völlig unkritisch. Die
+   Beulen entstehen aus zwei Pseudo-Elementen, die Unschärfe macht sie weich. */
+
+.wolke {
+    position: absolute;
+    left: 100%;
+    width: var(--breite, 180px);
+    height: var(--hoehe, 50px);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    filter: blur(var(--blur, 12px));
+    opacity: var(--deckkraft, .5);
+    animation-name: ms-wolken-zug;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--dauer, 60s);
+    animation-delay: var(--delay, 0s);
+}
+
+.wolke::before,
+.wolke::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.wolke::before {
+    left: 13%;
+    top: -50%;
+    width: 46%;
+    height: 138%;
+}
+
+.wolke::after {
+    right: 11%;
+    top: -32%;
+    width: 37%;
+    height: 112%;
+}
+
+/* Nur Wolken am Himmel (ohne Regen/Schnee): leichte Trübung */
+.wetter--wolken {
+    background: linear-gradient(180deg,
+        rgba(206, 218, 232, .18) 0%,
+        rgba(206, 218, 232, .07) 55%,
+        rgba(206, 218, 232, 0) 100%);
+}
+
+/* dunkle Regenwolke */
+.wolke--dunkel {
+    background: rgba(52, 64, 84, .62);
+}
+
+@keyframes ms-wolken-zug {
+    from { left: 100%; }
+    to   { left: -80%; }
+}
+
+/* ---------- Nebel ---------- */
+/* Hell, transparent, weich – und bewusst im Vordergrund: die untere Hälfte
+   bekommt zusätzlich einen milchigen Schleier, darüber ziehen große Schwaden
+   ganz langsam durch (gleiche Technik wie die Wolken, nur größer und weicher). */
+
+.wetter--nebel {
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, .04) 0%,
+        rgba(255, 255, 255, .12) 45%,
+        rgba(255, 255, 255, .26) 100%);
+}
+
+.schwade {
+    position: absolute;
+    left: 100%;
+    width: var(--breite, 420px);
+    height: var(--hoehe, 110px);
+    border-radius: 50%;
+    background: #fff;
+    filter: blur(var(--blur, 28px));
+    opacity: var(--deckkraft, .35);
+    animation-name: ms-nebel-zug;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--dauer, 90s);
+    animation-delay: var(--delay, 0s);
+}
+
+.schwade::before,
+.schwade::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.schwade::before {
+    left: 10%;
+    top: -55%;
+    width: 52%;
+    height: 150%;
+}
+
+.schwade::after {
+    right: 8%;
+    top: -35%;
+    width: 42%;
+    height: 125%;
+}
+
+@keyframes ms-nebel-zug {
+    from { left: 100%; }
+    to   { left: -120%; }
+}
+
+/* ---------- Regen ---------- */
+/* Viele kleine, dunkelblaue Tropfen. Gleiche Technik wie beim Schnee: eine Bahn
+   in voller Wiesenhöhe fällt (nur transform → GPU), darin hängt der Tropfen
+   leicht schräg. */
+
+.wetter--regen {
+    background: linear-gradient(180deg, rgba(30, 52, 84, .10) 0%, rgba(30, 52, 84, .05) 65%, rgba(30, 52, 84, 0) 100%);
+}
+
+.tropfen-bahn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    animation-name: ms-regen-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+}
+
+.tropfen {
+    display: block;
+    width: var(--breite, 1.6px);
+    height: var(--laenge, 12px);
+    margin-left: calc(var(--breite, 1.6px) / -2);
+    border-radius: 999px;
+    background: linear-gradient(to bottom, rgba(16, 40, 86, 0) 0%, rgba(16, 40, 86, .92) 85%);
+    opacity: var(--deckkraft, .7);
+    transform: rotate(var(--neigung, 7deg));
+    transform-origin: 50% 100%;
+}
+
+/* helle Tropfen (weiß/hellgrau) dazwischen – wie Regentropfen im Gegenlicht */
+.tropfen--hell {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(240, 246, 255, .95) 85%);
+    box-shadow: 0 0 3px rgba(255, 255, 255, .55);
+}
+
+@keyframes ms-regen-fall {
+    from { transform: translate3d(0, -18%, 0); }
+    to   { transform: translate3d(-52px, 100%, 0); }
+}
+
+/* ---------- Gewitter ---------- */
+/* Dunkle Wolken tief über dem Horizont, dazwischen Blitze (Zickzack als SVG,
+   in chat.js gewürfelt) und Donner aus der Web Audio API. Der Himmel ist auf
+   dem Wiesenbild nur das obere Fünftel – Blitze bleiben deshalb oben. */
+
+.wetter--gewitter {
+    background: linear-gradient(180deg,
+        rgba(22, 30, 46, .50) 0%,
+        rgba(28, 38, 56, .30) 20%,
+        rgba(30, 40, 58, .12) 42%,
+        rgba(30, 40, 58, 0) 68%);
+}
+
+/* bedrohlich dunkle Wolken */
+.wetter--gewitter .wolke {
+    background: rgba(36, 44, 62, .8);
+}
+
+/* Wolkenblitz: heller Schein über der ganzen Wiese */
+.blitz-schein {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: radial-gradient(120% 90% at 50% 4%,
+        rgba(255, 255, 255, .95) 0%,
+        rgba(206, 226, 255, .60) 30%,
+        rgba(176, 204, 255, .20) 55%,
+        rgba(176, 204, 255, 0) 76%);
+}
+
+/* Der Strahl selbst: eine SVG-Polyline, Punkte kommen aus blitzNeu() */
+.blitz {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    overflow: visible;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, .95))
+            drop-shadow(0 0 12px rgba(150, 195, 255, .9));
+}
+
+.blitz polyline {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.wetter.ist-blitz .blitz-schein {
+    animation: ms-blitz-schein .62s ease-out;
+}
+
+.wetter.ist-blitz .blitz {
+    animation: ms-blitz-strahl .5s ease-out;
+}
+
+@keyframes ms-blitz-schein {
+    0%   { opacity: 0; }
+    6%   { opacity: .95; }
+    13%  { opacity: .10; }
+    22%  { opacity: .78; }
+    34%  { opacity: .04; }
+    100% { opacity: 0; }
+}
+
+@keyframes ms-blitz-strahl {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; }
+    12%  { opacity: .12; }
+    21%  { opacity: .92; }
+    32%  { opacity: .08; }
+    47%  { opacity: .70; }
+    62%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Im zugeklappten Flügel nichts animieren (Akku/CPU auf dem Tablet). */
+.wing:not(.is-open) .flocke-bahn,
+.wing:not(.is-open) .flocke,
+.wing:not(.is-open) .tropfen-bahn,
+.wing:not(.is-open) .wolke,
+.wing:not(.is-open) .schwade,
+.wing:not(.is-open) .blitz,
+.wing:not(.is-open) .blitz-schein {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .schaf {
+        animation: none;
+    }
+
+    /* Kein Würfel-Schwung für alle, die Bewegung reduziert haben. */
+    .wuerfel {
+        transition: none;
+    }
+
+    /* Schnee, Regen, Wolken, Nebel und Blitze bleiben stehen. */
+    .flocke-bahn,
+    .flocke,
+    .tropfen-bahn,
+    .wolke,
+    .schwade,
+    .blitz,
+    .blitz-schein {
+        animation-play-state: paused;
+    }
+}
+
+
+/* ------------------------------------------------- Stufen-Auswahl (pop) */
+/* Große, bunte Level-Karten mit Glow, Lichtstreifen und Farbnebel –
+   soll Spannung machen, bevor der Chat startet. */
+
+.stufe-screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 34px 18px 38px;
+    text-align: center;
+    color: #fff;
+    background: radial-gradient(120% 120% at 50% 0%, #1d3b2a 0%, #12261c 55%, #08130e 100%);
+    border-radius: 22px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Langsam rotierender Farbnebel hinter den Karten */
+.stufe-screen::before {
+    content: "";
+    position: absolute;
+    inset: -45%;
+    z-index: -1;
+    background: conic-gradient(from 0deg, #22c55e, #f59e0b, #ef4444, #8b5cf6, #22d3ee, #22c55e);
+    filter: blur(64px);
+    opacity: .38;
+    animation: ms-stufe-nebel 20s linear infinite;
+}
+
+@keyframes ms-stufe-nebel {
+    to { transform: rotate(360deg); }
+}
+
+/* Wird per JS über screenEl.hidden = true ausgeblendet. */
+.stufe-screen[hidden] {
+    display: none;
+}
+
+/* „Live"-Plakette über der Überschrift */
+.stufe-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 5px 14px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #06301b;
+    background: #86efac;
+    border-radius: 999px;
+    box-shadow: 0 2px 12px rgba(134, 239, 172, .45);
+}
+
+.stufe-kicker::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #15803d;
+    animation: ms-stufe-blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes ms-stufe-blink {
+    50% { opacity: 0; }
+}
+
+/* Überschrift mit laufendem Farbverlauf */
+.stufe-screen h2 {
+    margin: 2px 0 0;
+    font-size: clamp(22px, 5.6vw, 31px);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    background: linear-gradient(90deg, #a7f3d0, #fef08a, #fda4af, #c4b5fd, #a7f3d0);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: ms-stufe-verlauf 7s linear infinite;
+}
+
+@keyframes ms-stufe-verlauf {
+    to { background-position: 300% 0; }
+}
+
+.stufe-sub {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, .72);
+}
+
+/* Karten-Raster */
+.stufe-screen .stufe-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+}
+
+
+/* Die Level-Karten */
+.stufe-screen .stufe-btn {
+    --glow: rgba(255, 255, 255, .45);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    padding: 14px 16px 15px;
+    font: inherit;
+    text-align: left;
+    color: #fff;
+    background: linear-gradient(140deg, #475569, #94a3b8);
+    border: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    isolation: isolate;
+    animation: ms-stufe-glow 2.8s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * -.7s);
+    transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.stufe-screen .stufe-btn > span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Lichtstreifen, der immer wieder über die Karte läuft */
+.stufe-screen .stufe-btn::before {
+    content: "";
+    position: absolute;
+    inset: -20% -60%;
+    z-index: 0;
+    background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, .55) 50%, transparent 60%);
+    transform: translateX(-70%);
+    animation: ms-stufe-schimmer 3.8s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * -1.1s);
+    pointer-events: none;
+}
+
+@keyframes ms-stufe-schimmer {
+    0%, 55%   { transform: translateX(-70%); }
+    85%, 100% { transform: translateX(70%); }
+}
+
+@keyframes ms-stufe-glow {
+    0%, 100% {
+        box-shadow: 0 8px 18px rgba(4, 12, 8, .38), 0 0 0 0 var(--glow),
+                    0 0 0 1px rgba(255, 255, 255, .16) inset;
+    }
+    50% {
+        box-shadow: 0 12px 26px rgba(4, 12, 8, .42), 0 0 22px 3px var(--glow),
+                    0 0 0 1px rgba(255, 255, 255, .28) inset;
+    }
+}
+
+.stufe-btn-icon  { font-size: 24px; line-height: 1.15; }
+.stufe-btn-label { font-size: 19px; font-weight: 900; letter-spacing: -.01em; }
+.stufe-btn-hint  { font-size: 12px; font-weight: 600; opacity: .88; }
+
+/* Farbwelten pro Stufe */
+.stufe-screen .stufe-btn--leicht {
+    --glow: rgba(74, 222, 128, .65);
+    background: linear-gradient(140deg, #15803d 0%, #22c55e 55%, #86efac 100%);
+}
+
+.stufe-screen .stufe-btn--mittel {
+    --glow: rgba(251, 191, 36, .7);
+    background: linear-gradient(140deg, #b45309 0%, #f59e0b 55%, #fde047 100%);
+}
+
+.stufe-screen .stufe-btn--schwer {
+    --glow: rgba(244, 63, 94, .7);
+    background: linear-gradient(140deg, #9f1239 0%, #ef4444 55%, #fb7185 100%);
+}
+
+.stufe-screen .stufe-btn--zufall {
+    --glow: rgba(167, 139, 250, .75);
+    background: linear-gradient(140deg, #4c1d95 0%, #8b5cf6 45%, #ec4899 75%, #f59e0b 100%);
+}
+
+
+/* „Schwer" bekommt ein pulsierendes Warn-Leuchten */
+.stufe-btn--schwer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    animation: ms-stufe-puls 2.2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ms-stufe-puls {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, .8) inset; }
+    50%      { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0) inset; }
+}
+
+/* Der Würfel wackelt – „Trau dich!" */
+.stufe-btn--zufall .stufe-btn-icon {
+    animation: ms-stufe-wackeln 2.6s ease-in-out infinite;
+}
+
+@keyframes ms-stufe-wackeln {
+    0%, 100% { transform: rotate(0deg); }
+    12%      { transform: rotate(-16deg); }
+    24%      { transform: rotate(14deg); }
+    36%      { transform: rotate(-8deg); }
+    48%      { transform: rotate(0deg); }
+}
+
+/* Reaktion auf Finger/Maus */
+.stufe-screen .stufe-btn:hover,
+.stufe-screen .stufe-btn:focus-visible {
+    transform: translateY(-3px) scale(1.035);
+    filter: brightness(1.08) saturate(1.12);
+    outline: none;
+}
+
+.stufe-screen .stufe-btn:focus-visible {
+    box-shadow: 0 0 0 3px #fff, 0 12px 26px rgba(4, 12, 8, .45);
+}
+
+.stufe-screen .stufe-btn:active {
+    transform: translateY(0) scale(.97);
+}
+
+.stufe-screen .stufe-btn.is-on {
+    background: linear-gradient(140deg, #0f766e, #14b8a6);
+    box-shadow: 0 0 0 3px #fff inset, 0 12px 26px rgba(4, 12, 8, .45);
+}
+
+@media (max-width: 380px) {
+    .stufe-screen .stufe-btn { padding: 12px 12px 13px; }
+    .stufe-btn-label { font-size: 17px; }
+    .stufe-btn-hint  { font-size: 11px; }
+}
+
+/* Wer Bewegung reduziert haben will, bekommt alles statisch. */
+@media (prefers-reduced-motion: reduce) {
+    .stufe-screen::before,
+    .stufe-screen h2,
+    .stufe-screen .stufe-btn,
+    .stufe-screen .stufe-btn::before,
+    .stufe-screen .stufe-btn::after,
+    .stufe-kicker::before,
+    .stufe-btn--zufall .stufe-btn-icon {
+        animation: none;
+    }
+
+    .stufe-screen h2 {
+        -webkit-text-fill-color: #eafff3;
+        color: #eafff3;
+    }
+}
+
+
+/* -------------------------------------- Belohnung / Ziel erreicht im Chat */
+/* System-Zeilen: kurze Rückmeldung für neue Schafe und erreichte Ziele. */
+
+.msg-row--system {
+    justify-content: center;
+    margin: 2px 0;
+}
+
+.msg-system {
+    padding: 5px 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--ms-green-dark);
+    background: var(--ms-green-light);
+    border: 1px solid #b7dfb9;
+    border-radius: 999px;
+    animation: ms-system-pop .35s ease-out;
+}
+
+@keyframes ms-system-pop {
+    from { transform: scale(.8); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+}
+
+/* Fehlermeldungen im Chat: rote Optik statt grüner Erfolgs-Optik. */
+.msg-system--fehler {
+    color: #b3261e;
+    background: #fdecea;
+    border-color: #f5c6c2;
+}
+
+/* „Nochmal versuchen" unter einer Fehlermeldung. */
+.msg-retry {
+    padding: 6px 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+}
+
+/* Kurz eingeblendetes "+1 Schaf"-Bild (nach 3 s wieder weg). */
+.msg-schafplus {
+    width: 54px;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    animation: ms-schafplus-pop .38s ease-out;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.msg-row.is-weg .msg-schafplus {
+    opacity: 0;
+    transform: scale(.85);
+}
+
+@keyframes ms-schafplus-pop {
+    from { transform: scale(.55); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Pfeil zum rechten Flügel blinkt kurz, wenn ein neues Schaf dazukommt. */
+.is-chat .wing-arrow.is-flash {
+    animation: ms-wing-flash .7s ease-in-out 4;
+    background: rgba(255, 255, 255, .28);
+    border-radius: 50%;
+}
+
+@keyframes ms-wing-flash {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); transform: translateY(-50%) scale(1); }
+    50%      { box-shadow: 0 0 0 6px rgba(255, 255, 255, .35); transform: translateY(-50%) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .msg-system,
+    .msg-schafplus,
+    .is-chat .wing-arrow.is-flash {
+        animation: none;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Antwortoptionen im Schüler-Chat (Quiz-Bausteine)
+   Die KI schreibt A) … B) … C) … D) – chat.js macht daraus Knöpfe.
+   ------------------------------------------------------------------ */
+
+.msg-row--frage {
+    width: 100%;
+}
+
+.msg-bubble--frage {
+    max-width: 100%;
+    width: 100%;
+}
+
+.msg-optionen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.msg-option {
+    padding: 9px 11px;
+    font: inherit;
+    font-size: 14.5px;
+    line-height: 1.3;
+    text-align: left;
+    color: #17240f;
+    background: #fff;
+    border: 2px solid var(--ms-border);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.msg-option:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(32, 48, 31, .12);
+}
+
+.msg-option:disabled {
+    opacity: .55;
+    cursor: default;
+}
+
+.msg-option--a { border-color: #9fc6f2; background: #f2f8ff; }
+.msg-option--b { border-color: #f3cf94; background: #fff8ec; }
+.msg-option--c { border-color: #a9d8ab; background: #f3fbf3; }
+.msg-option--d { border-color: #d0b3e6; background: #faf4ff; }
+
+@media (max-width: 560px) {
+    .msg-optionen {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ------------------------------------------------------------------
+   4. Würfelfläche: Quiz "Teste dein Wissen"
+   ------------------------------------------------------------------ */
+
+.wuerfel--3d > .wing--quiz {
+    transform: rotateY(270deg) translateZ(var(--tiefe));
+}
+
+.wing-inner--quiz {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 12px;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #fffdf5 0%, #eef6ea 100%);
+}
+
+.quiz-face-head h2 {
+    margin: 0;
+    font-size: 19px;
+    color: var(--ms-green-dark);
+}
+
+.quiz-face-kopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.quiz-face-zurueck {
+    padding: 6px 12px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ms-green-dark);
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.quiz-face-zurueck:hover {
+    background: var(--ms-green-light);
+    border-color: #bfd8c0;
+}
+
+.quiz-face-ton {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    line-height: 1;
+    color: #17320f;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.quiz-face-meta {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--ms-muted);
+}
+
+.quiz-face-chat {
+    flex: 1 1 auto;
+    min-height: 170px;
+    max-height: 44vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 14px;
+}
+
+.quiz-face-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Kompakter im Würfel, damit die Tribüne oben ganz sichtbar bleibt */
+.wing-inner--quiz .tribuene-schaf {
+    max-width: 56px;
+}
+
+.wing-inner--quiz .tribuene-reihe--vorn .tribuene-schaf {
+    max-width: 68px;
+}
+
+.wing-inner--quiz .quiz-face-chat {
+    max-height: 38vh;
+}
+
+/* Lobby-Balken unter "Leicht / Mittel / Schwer" */
+.quiz-balken {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px 14px;
+    font: inherit;
+    text-align: left;
+    color: #10310f;
+    background: linear-gradient(135deg, #ffe9b3 0%, #ffd166 55%, #ffc233 100%);
+    border: 2px solid #f0b429;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(160, 110, 0, .18);
+    transition: transform .08s ease, box-shadow .12s ease;
+}
+
+.quiz-balken:hover:not(.ist-gesperrt) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(160, 110, 0, .24);
+}
+
+.quiz-balken:active:not(.ist-gesperrt) {
+    transform: translateY(0);
+}
+
+.quiz-balken-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.quiz-balken-text {
+    font-weight: 800;
+    letter-spacing: .01em;
+}
+
+.quiz-balken-meta {
+    flex: 1 1 auto;
+    font-size: 12px;
+    color: #6b4a00;
+    text-align: right;
+}
+
+.quiz-balken-pfeil {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.quiz-balken.ist-gesperrt {
+    opacity: .6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Challenge-Balken in der Lobby (eigenes Projekt, grün abgesetzt) */
+.challenge-balken {
+    margin-top: 10px;
+    color: #10310f;
+    background: linear-gradient(135deg, #e2f5d3 0%, #b6e39a 55%, #8ccd6c 100%);
+    border-color: #5faa3d;
+    box-shadow: 0 4px 14px rgba(60, 110, 30, .18);
+    text-decoration: none;
+}
+
+.challenge-balken:hover {
+    box-shadow: 0 8px 18px rgba(60, 110, 30, .24);
+}
+
+.challenge-balken .quiz-balken-meta { color: #2f5c1a; }
+
+.challenge-balken-schaf {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .15));
+}
+
+@media (max-width: 560px) {
+    .quiz-balken-meta {
+        display: none;
+    }
+
+    /* Auf der Challenge-Kachel ist das Thema die Information – also zeigen. */
+    .challenge-balken .quiz-balken-meta {
+        display: block;
+        flex: 0 1 auto;
+        min-width: 0;
+        max-width: 42%;
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* ------------------------------------------------- Rechts-Fußzeile (Seitenende) */
+/* Winzige Links, die von jeder Würfelfläche aus erreichbar sind: Impressum,
+   Datenschutz und die Einwilligung des jeweiligen Schülers (index.php). */
+.fuss-recht {
+    padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ms-muted);
+}
+
+.fuss-recht a {
+    color: var(--ms-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.fuss-recht a:hover,
+.fuss-recht a:focus-visible {
+    color: var(--ms-green);
+}
+
+.fuss-recht span {
+    margin: 0 3px;
+    opacity: .6;
+}
+
+/* ---- Hauptbild (Referenzbild) klein oben im Chat -------------------------
+   Erstes Bild im Musterdialog eines Bausteins; ein Klick dreht den Würfel zur
+   Bildseite (data-dreh-zu wird von chat.js ausgewertet). */
+
+.chat-bild-leiste {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 12px 0;
+}
+
+.chat-bild-chip {
+    flex: 0 0 auto;
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #eef3e7;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+    touch-action: manipulation;
+}
+
+.chat-bild-chip img {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    display: block;
+}
+
+.chat-bild-chip:active {
+    transform: scale(.96);
+}
+
+
